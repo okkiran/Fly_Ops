@@ -11,5 +11,4 @@ export function Airplane(props) {
         </group>
     );
 }
-
 useGLTF.preload("./models/Airplane.glb");

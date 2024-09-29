@@ -5,7 +5,6 @@ import { Canvas } from "@react-three/fiber";
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
       <Canvas camera={{ position: [0, 5, 10], fov: 50 }}>
