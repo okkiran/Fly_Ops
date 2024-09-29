@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Airplane } from "./components/Airplane";
 import { OrbitControls } from "@react-three/drei"; // Optional, for controlling the camera
 import { Canvas } from "@react-three/fiber";
