@@ -14,7 +14,6 @@ function App() {
         <OrbitControls /> {/* Optional, for camera movement */}
         <Airplane position={[0, 0, 0]} />
       </Canvas>
-
   )
 }
 
