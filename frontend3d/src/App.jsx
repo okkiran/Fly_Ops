@@ -1,8 +1,9 @@
 import { Airplane } from "./components/Airplane";
-import { OrbitControls } from "@react-three/drei"; // Optional, for controlling the camera
 import { Canvas } from "@react-three/fiber";
 import './App.css'
 import {Background} from "./components/Background.jsx";
+import {Float, OrbitControls} from "@react-three/drei";
+
 
 function App() {
 
@@ -21,7 +22,14 @@ function App() {
               maxPolarAngle={Math.PI / 2}
               minPolarAngle={0}
           />
-          <Airplane position={[0, 0, 0]} scale={[0.02, 0.02, 0.02]} />
+
+          <Float floatIntensity={2} speed={2} >
+          {/* Airplane */}
+          <Airplane rotation-y={Math.PI / 2}
+                    scale={[0.2, 0.2, 0.2]}
+                    position-y={0.1}/>
+           </Float>
+
       </Canvas>
 
   )
