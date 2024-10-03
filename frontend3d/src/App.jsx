@@ -1,38 +1,47 @@
-import { Airplane } from "./components/Airplane";
 import { Canvas } from "@react-three/fiber";
-import './App.css'
-import {Background} from "./components/Background.jsx";
-import {Float, OrbitControls} from "@react-three/drei";
-
+import './App.css';
+import { Float, OrbitControls } from "@react-three/drei";
+import { useState } from "react";
+import {Airplane} from "./components/Airplane";
+import Background from "./components/Background"; // Import the Background component
 
 function App() {
+    // Removed the state for flight details
+    const handlePlaneClick = () => {
+        // This function can be expanded later for flight-related features
+    };
 
-  return (
-      <Canvas camera={{ position: [0, 0, 50], fov: 50 }}>
-          <Background />
-          <ambientLight intensity={0.5} />
-          <directionalLight position={[5, 5, 5]} intensity={1} />
+    return (
+        <div>
+            <Canvas camera={{ position: [0, 0, 10], fov: 60 }}>
+                {/* Background component containing Sky and Clouds */}
+                <Background />
 
-          {/* Mouse Control */}
-          <OrbitControls
-              enableDamping={true}
-              dampingFactor={0.05}
-              minDistance={30}
-              maxDistance={80}
-              maxPolarAngle={Math.PI / 2}
-              minPolarAngle={0}
-          />
+                {/* Basic Lighting */}
+                <ambientLight intensity={0.5} />
+                <directionalLight position={[5, 5, 5]} intensity={1} />
 
-          <Float floatIntensity={2} speed={2} >
-          {/* Airplane */}
-          <Airplane rotation-y={Math.PI / 2}
-                    scale={[0.2, 0.2, 0.2]}
-                    position-y={0.1}/>
-           </Float>
+                {/* Controls */}
+                <OrbitControls
+                    enableDamping={true}
+                    dampingFactor={0.05}
+                    minDistance={10}
+                    maxDistance={50}
+                    enablePan={true}
+                />
 
-      </Canvas>
-
-  )
+                {/* Airplane floating */}
+                <Float floatIntensity={1.5} speed={1.5}>
+                    <Airplane
+                        rotation-y={Math.PI / 2}
+                        scale={[0.5, 0.5, 0.5]} // Adjusted scale for better visibility
+                        position={[0, 0, 0]}  // Centered the airplane
+                        onClick={handlePlaneClick} // Click handler for future use
+                    />
+                </Float>
+            </Canvas>
+        </div>
+    );
 }
 
-export default App
+export default App;

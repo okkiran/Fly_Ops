@@ -1,16 +1,17 @@
-import {Sphere} from "@react-three/drei";
-import {Gradient, LayerMaterial} from "lamina";
-import * as THREE from "three";
+import { Sky, Cloud } from "@react-three/drei";
 
-export const Background = () => {
+const Background = () => {
     return (
-        <Sphere scale={[100, 100, 100]} rotation-y={Math.PI / 2}>
-            <LayerMaterial
-                lighting="physical"
-                transparent={1}
-                side={THREE.BackSide}>
-                <Gradient colorA={"#44596e"} colorB={"white"} axes={"y"} start={0} end={-0.5}/>
-            </LayerMaterial>
-        </Sphere>
+        <>
+            {/* Sky */}
+            <Sky distance={450000} sunPosition={[0, 1, 0]} azimuth={0.25} inclination={0.6} />
+
+            {/* Clouds */}
+            <Cloud position={[-10, 10, -20]} scale={1.5} />
+            <Cloud position={[10, 20, -40]} scale={2} />
+        </>
     );
 };
+
+
+export default Background;
