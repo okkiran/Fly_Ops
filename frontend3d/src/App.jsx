@@ -1,7 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import './App.css';
 import { Float, OrbitControls } from "@react-three/drei";
-import { useState } from "react";
 import {Airplane} from "./components/Airplane";
 import Background from "./components/Background"; // Import the Background component
 
