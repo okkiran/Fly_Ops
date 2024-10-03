@@ -2,21 +2,18 @@ import { Canvas } from "@react-three/fiber";
 import './App.css';
 import { Float, OrbitControls } from "@react-three/drei";
 import {Airplane} from "./components/Airplane";
-import Background from "./components/Background"; // Import the Background component
+import Background from "./components/Background";
 
 function App() {
-    // Removed the state for flight details
-    const handlePlaneClick = () => {
-        // This function can be expanded later for flight-related features
-    };
 
     return (
         <div>
             <Canvas camera={{ position: [0, 0, 10], fov: 60 }}>
-                {/* Background component containing Sky and Clouds */}
+
+                {/* Background*/}
                 <Background />
 
-                {/* Basic Lighting */}
+                {/* Lighting */}
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[5, 5, 5]} intensity={1} />
 
@@ -33,9 +30,8 @@ function App() {
                 <Float floatIntensity={1.5} speed={1.5}>
                     <Airplane
                         rotation-y={Math.PI / 2}
-                        scale={[0.5, 0.5, 0.5]} // Adjusted scale for better visibility
+                        scale={[0.5, 0.5, 0.5]}
                         position={[0, 0, 0]}  // Centered the airplane
-                        onClick={handlePlaneClick} // Click handler for future use
                     />
                 </Float>
             </Canvas>
