@@ -4,15 +4,31 @@ import { OrbitControls } from "@react-three/drei";
 import { useState, useEffect } from "react";
 import { Airplane } from "./components/Airplane";
 import Background from "./components/Background";
+import { gsap } from "gsap";
 
 function App() {
     const [scrollProgress, setScrollProgress] = useState(0); // Track the user's scroll position
+    const [menuVisible, setMenuVisible] = useState(false); // State to control menu visibility
+    const [menuContent, setMenuContent] = useState(''); // Content for the menu
 
     // Event handler to update scroll progress based on the mouse wheel
+
     const handleScroll = (event) => {
         setScrollProgress((prev) => {
-            const newProgress = prev + event.deltaY * 0.0005; // Adjust scroll speed by scaling the deltaY
-            return Math.max(0, Math.min(newProgress, 1)); // Clamp the progress between 0 and 1
+            const targetProgress = prev + event.deltaY * 0.0005; // Adjust scroll speed
+            const clampedProgress = Math.max(0, Math.min(targetProgress, 1)); // Clamp progress between 0 and 1
+
+            // Use gsap to animate the scroll progress smoothly
+            gsap.to({ value: prev }, {
+                value: clampedProgress,
+                duration: 0.5, // Adjust duration for smoothness
+                ease: "power2.out", // Smooth easing
+                onUpdate: function () {
+                    setScrollProgress(this.targets()[0].value); // Update state smoothly
+                },
+            });
+
+            return prev; // We don't update immediately, as gsap will handle the progress animation
         });
     };
 
@@ -22,8 +38,27 @@ function App() {
         return () => window.removeEventListener('wheel', handleScroll); // Cleanup
     }, []);
 
+    // Update menu content and visibility based on scroll progress
+    useEffect(() => {
+        if (scrollProgress < 0.2) {
+            setMenuContent('Flights');
+            setMenuVisible(true);
+        } else if (scrollProgress < 0.4) {
+            setMenuContent('Users');
+            setMenuVisible(true);
+        } else if (scrollProgress < 0.6) {
+            setMenuContent('Airlines');
+            setMenuVisible(true);
+        } else if (scrollProgress < 0.8) {
+            setMenuContent('Stations');
+            setMenuVisible(true);
+        } else {
+            setMenuVisible(false); // Hide menu after the last section
+        }
+    }, [scrollProgress]);
+
     return (
-        <div>
+        <div style={{ position: 'relative', height: '100vh' }}>
             <Canvas camera={{ position: [0, 0, 10], fov: 60 }}>
                 {/* Background component containing Sky and Clouds */}
                 <Background />
@@ -47,6 +82,13 @@ function App() {
                     scrollProgress={scrollProgress} // Pass scroll progress to the Airplane component
                 />
             </Canvas>
+
+            {/* Menu Display */}
+            {menuVisible && (
+                <div className={`menu ${menuVisible ? 'visible' : ''}`}>
+                    {menuContent}
+                </div>
+            )}
         </div>
     );
 }
