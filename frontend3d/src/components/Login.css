@@ -20,13 +20,13 @@
     height: 100%;
     background-size: cover;
     background-position: center;
-    filter: blur(10px); /* Only this background is blurred */
-    z-index: -1; /* Ensure it is behind the login form */
+    filter: blur(10px);
+    z-index: -1;
 }
 
 .login-container {
     position: relative;
-    background-color: rgba(255, 255, 255, 0.5); /* Opaque for readability */
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 10px;
     padding: 2rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -34,8 +34,8 @@
     flex-direction: column;
     align-items: center;
     width: 90%;
-    max-width: 400px; /* Max width for the centered form */
-    z-index: 1; /* Keep it above background-blur */
+    max-width: 400px;
+    z-index: 1;
 }
 
 .login-container input {
