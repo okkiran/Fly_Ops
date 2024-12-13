@@ -1,11 +1,15 @@
 package controllers;
 
+
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import services.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import services.AuthService;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -14,14 +18,14 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    // Login endpoint
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User loginUser) {
+    public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password) {
         try {
-            // Update method call to match new field name
-            User authenticatedUser = authService.login(loginUser.getUsername(), loginUser.getPassword());
-            return new ResponseEntity<>(authenticatedUser, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Invalid credentials", HttpStatus.UNAUTHORIZED);
+            User user = authService.login(username, password);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 }

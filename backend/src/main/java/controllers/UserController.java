@@ -52,7 +52,7 @@ public class UserController {
 
         if (existingUser.isPresent()) {
             User userToUpdate = existingUser.get();
-            userToUpdate.setUsername(updatedUser.getUsername());
+            userToUpdate.setUserName(updatedUser.getUserName());
             userToUpdate.setName(updatedUser.getName());
             userToUpdate.setSurname(updatedUser.getSurname());
             userToUpdate.setUpdateUser(updatedUser.getUpdateUser()); // Track who made the update

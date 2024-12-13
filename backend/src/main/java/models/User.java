@@ -4,105 +4,96 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long ID;
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+    @Column(nullable = false, unique = true)
+    private String UserName;
 
-    private String name;
+    private String Name;
 
-    private String surname;
+    private String Surname;
 
-    @Column(name = "created_time", nullable = false, updatable = false)
-    private LocalDateTime createdTime;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime CreTime;
 
-    @Column(name = "updated_time")
-    private LocalDateTime updatedTime;
+    private LocalDateTime UpdateTime;
 
-    private String updateUser;
+    private String UpdateUser;
 
-    @Column(nullable = false)
-    private String password;
-
-    // Automatically set createdTime and updatedTime before the record is saved
     @PrePersist
     protected void onCreate() {
-        this.createdTime = LocalDateTime.now();
-        this.updatedTime = LocalDateTime.now();
+        this.CreTime = LocalDateTime.now();
+        this.UpdateTime = LocalDateTime.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.updatedTime = LocalDateTime.now();
+        this.UpdateTime = LocalDateTime.now();
     }
 
     // Getters and Setters
-    public Long getId() {
-        return id;
+
+    public Long getID() {
+        return ID;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setID(Long ID) {
+        this.ID = ID;
     }
 
-    public String getUsername() { // This was updated to be consistent
-        return username;
+    public String getUserName() {
+        return UserName;
     }
 
-    public void setUsername(String username) { // Also updated to match field name
-        this.username = username;
+    public void setUserName(String userName) {
+        this.UserName = userName;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 
     public String getSurname() {
-        return surname;
+        return Surname;
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.Surname = surname;
     }
 
-    public LocalDateTime getCreatedTime() {
-        return createdTime;
+    public LocalDateTime getCreTime() {
+        return CreTime;
     }
 
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
+    public void setCreTime(LocalDateTime creTime) {
+        this.CreTime = creTime;
     }
 
-    public LocalDateTime getUpdatedTime() {
-        return updatedTime;
+    public LocalDateTime getUpdateTime() {
+        return UpdateTime;
     }
 
-    public void setUpdatedTime(LocalDateTime updatedTime) {
-        this.updatedTime = updatedTime;
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.UpdateTime = updateTime;
     }
 
     public String getUpdateUser() {
-        return updateUser;
+        return UpdateUser;
     }
 
     public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
+        this.UpdateUser = updateUser;
     }
 
     public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+        return "";
     }
 }

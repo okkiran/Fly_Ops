@@ -1,12 +1,11 @@
-// backend/src/main/java/services/AuthService.java
 package services;
 
 import models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import repositories.UserRepository;
 
-import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -14,10 +13,13 @@ public class AuthService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder; // For password hashing
+
     public User login(String username, String password) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
-        if (userOptional.isPresent() && userOptional.get().getPassword().equals(password)) { // Plain-text comparison
-            return userOptional.get(); // Return user details if login is successful
+        models.User user = userRepository.findByUsername(username); // Method to find user by username
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            return user; // Return user details if login is successful
         } else {
             throw new RuntimeException("Invalid credentials");
         }
