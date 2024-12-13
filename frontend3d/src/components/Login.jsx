@@ -1,26 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../services/authService';
 import './Login.css';
-import loginBg from '../assets/loginbg.png';
+import loginBg from '../assets/loginbg.png'; // Adjust the path if needed
 
-function Login() {
+function Login({ onLogin, loginError }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [loginError, setLoginError] = useState(false);
-    const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const userData = await login(username, password);
-            console.log('Login successful:', userData);
-            setLoginError(false);
-            navigate('/dashboard'); // Navigate to dashboard or any other route
-        } catch (error) {
-            console.error('Login failed:', error);
-            setLoginError(true);
-        }
+        onLogin(username, password);
     };
 
     return (
