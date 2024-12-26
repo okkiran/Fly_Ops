@@ -113,9 +113,9 @@ canvas {
 .floating-menu {
   background: white;
   color: black;
-  padding: 20px;
+  padding: 30px;
   border-radius: 10px;
-  width: 500px; /* Adjusted width for CRUD form */
+  width: 1000px; /* Adjusted width for CRUD form */
   max-height: 80%;
   overflow-y: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
