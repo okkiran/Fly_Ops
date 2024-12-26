@@ -1,11 +1,13 @@
+import { useState, useEffect } from 'react';
 import { Canvas } from "@react-three/fiber";
 import './App.css';
 import { OrbitControls } from "@react-three/drei";
-import { useState, useEffect } from "react";
 import { Airplane } from "./components/Airplane";
 import Background from "./components/Background";
 import { gsap } from "gsap";
 import Login from './components/Login'; // Import your Login component
+import AirlinesMenu from './components/AirlinesMenu';  // Import AirlinesMenu component
+
 
 function App() {
     const [scrollProgress, setScrollProgress] = useState(0);
@@ -13,7 +15,21 @@ function App() {
     const [menuContent, setMenuContent] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
     const [loginError, setLoginError] = useState(false);
+    const [hamburgerMenuOpen, setHamburgerMenuOpen] = useState(false); // Hamburger menu toggle state
+    const [floatingMenuVisible, setFloatingMenuVisible] = useState(false); // Floating menu toggle state
+    const [airplanePosition, setAirplanePosition] = useState([0, 0, 0]); // Airplane position state
+
+    // New state for storing airline data
+    const [airlines, setAirlines] = useState([]);
+
     const menuItems = ['Flights', 'Users', 'Airlines', 'Stations'];
+
+    const menuLocations = {
+        Flights: [10, 5, -5],
+        Users: [-10, 3, 2],
+        Airlines: [0, 8, -10],
+        Stations: [5, -5, 5]
+    };
 
     const handleLogin = (username, password) => {
         if (username === 'user' && password === 'password') {
@@ -25,7 +41,7 @@ function App() {
     };
 
     const handleScroll = (event) => {
-        if (loggedIn) {
+        if (!floatingMenuVisible) {
             setScrollProgress((prev) => {
                 const targetProgress = prev + event.deltaY * 0.0005;
                 const clampedProgress = Math.max(0, Math.min(targetProgress, 1));
@@ -47,7 +63,7 @@ function App() {
     useEffect(() => {
         window.addEventListener('wheel', handleScroll);
         return () => window.removeEventListener('wheel', handleScroll);
-    }, [loggedIn]);
+    }, [loggedIn, floatingMenuVisible]);
 
     useEffect(() => {
         if (loggedIn) {
@@ -68,12 +84,80 @@ function App() {
         }
     }, [scrollProgress, loggedIn]);
 
+    const toggleHamburgerMenu = () => {
+        setHamburgerMenuOpen(!hamburgerMenuOpen);
+    };
+
+    const openFloatingMenu = (menuOption) => {
+        setMenuContent(menuOption); // Set the content dynamically
+        setFloatingMenuVisible(true); // Show the floating menu
+        setHamburgerMenuOpen(false); // Close the hamburger menu
+
+        // Animate airplane to the related menu location
+        const targetPosition = menuLocations[menuOption] || [0, 0, 0];
+        gsap.to(airplanePosition, {
+            x: targetPosition[0],
+            y: targetPosition[1],
+            z: targetPosition[2],
+            duration: 2,
+            ease: "power2.out",
+            onUpdate: () => {
+                setAirplanePosition([...airplanePosition]); // Update state
+            }
+        });
+
+        // Fetch airlines when "Airlines" menu is clicked
+        if (menuOption === "Airlines") {
+            if (airlines.length === 0) {  // Only fetch data if not already fetched
+                fetch('http://localhost:8080/api/airlines') // Replace with your backend URL
+                    .then(response => response.json())
+                    .then(data => setAirlines(data))
+                    .catch(error => console.error('Error fetching airlines:', error));
+            }
+        }
+    };
+
+
+    const closeFloatingMenu = () => {
+        setFloatingMenuVisible(false); // Hide the floating menu
+    };
+
+    // Disable scrolling on the body when the floating menu is visible
+    useEffect(() => {
+        if (floatingMenuVisible) {
+            document.body.style.overflow = 'hidden'; // Disable scroll when the menu is open
+        } else {
+            document.body.style.overflow = 'auto'; // Re-enable scroll when the menu is closed
+        }
+
+        // Cleanup the effect
+        return () => {
+            document.body.style.overflow = 'auto'; // Ensure scroll is re-enabled
+        };
+    }, [floatingMenuVisible]);
+
     return (
-        <div className="App"> {/* This will now take up the full height and width */}
+        <div className="App">
             {!loggedIn ? (
                 <Login onLogin={handleLogin} loginError={loginError} />
             ) : (
                 <>
+                    {/* Hamburger Menu */}
+                    <div className="hamburger-menu">
+                        <button onClick={toggleHamburgerMenu} className="hamburger-button">
+                            ☰ {/* Hamburger icon */}
+                        </button>
+                        {hamburgerMenuOpen && (
+                            <ul className="menu-dropdown">
+                                <li onClick={() => openFloatingMenu("Flights")}>Flights</li>
+                                <li onClick={() => openFloatingMenu("Users")}>Users</li>
+                                <li onClick={() => openFloatingMenu("Airlines")}>Airlines</li>
+                                <li onClick={() => openFloatingMenu("Stations")}>Stations</li>
+                            </ul>
+                        )}
+                    </div>
+
+                    {/* 3D Scene */}
                     <Canvas camera={{ position: [0, 0, 10], fov: 60 }}>
                         <Background />
                         <ambientLight intensity={0.5} />
@@ -84,22 +168,46 @@ function App() {
                             minDistance={10}
                             maxDistance={50}
                             enablePan={true}
+                            enableZoom={true}
                         />
                         <Airplane
+                            position={airplanePosition} // Bind the airplane position
                             rotation-y={Math.PI / 2}
                             scrollProgress={scrollProgress}
                         />
                     </Canvas>
 
+                    {/* Scroll-Based Menu Visibility */}
                     {menuVisible && (
                         <div className={`menu ${menuVisible ? 'visible' : ''}`}>
                             {menuContent}
+                        </div>
+                    )}
+
+                    {/* Floating Menu Overlay */}
+                    {floatingMenuVisible && menuContent !== "Airlines" && (
+                        <div className="floating-menu-overlay">
+                            <div className="floating-menu">
+                                <button className="close-button" onClick={closeFloatingMenu}>
+                                    ✖ {/* Close Icon */}
+                                </button>
+                                <h2>{menuContent} Menu</h2>
+                                {/* Other menu content for Flights, Users, Stations */}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Render Airlines Menu */}
+                    {floatingMenuVisible && menuContent === "Airlines" && (
+                        <div className="floating-menu-overlay">
+                            <AirlinesMenu airlines={airlines} closeMenu={closeFloatingMenu} />
                         </div>
                     )}
                 </>
             )}
         </div>
     );
+
 }
 
 export default App;
