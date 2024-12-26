@@ -5,9 +5,8 @@ import com.fly_ops.flightmanagement.services.AirlineService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
+import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/api/airlines")
@@ -27,27 +26,24 @@ public class AirlineController {
         return Mono.just(ResponseEntity.ok().body(airlines));  // Wrap it in a ResponseEntity and return as a Mono
     }
 
-
-
     // Get airline by ID
     @GetMapping("/{id}")
     public Mono<ResponseEntity<Airline>> getAirline(@PathVariable String id) {
         return airlineService.findById(id)
                 .map(airline -> ResponseEntity.ok().body(airline))
-                .retry();
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
     // Create a new airline
     @PostMapping
     public Mono<ResponseEntity<Airline>> createAirline(@RequestBody AirlineDto dto) {
         return airlineService.createAirline(dto.code(), dto.description(), "SystemUser")
-                .publishOn(Schedulers.boundedElastic())
-                .map(createdAirline -> ResponseEntity.status(HttpStatus.CREATED).body(createdAirline.block()));
+                .map(createdAirline -> ResponseEntity.status(HttpStatus.CREATED).body(createdAirline));
     }
 
     // Update an existing airline
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<Mono<Airline>>> updateAirline(@PathVariable String id, @RequestBody AirlineDto dto) {
+    public Mono<ResponseEntity<Airline>> updateAirline(@PathVariable String id, @RequestBody AirlineDto dto) {
         return airlineService.updateAirline(id, dto.code(), dto.description(), "SystemUser")
                 .map(updatedAirline -> ResponseEntity.ok().body(updatedAirline));
     }
@@ -60,7 +56,5 @@ public class AirlineController {
     }
 
     // DTO class for airline creation and updates
-        record AirlineDto(String code, String description) {
-
-    }
+    public record AirlineDto(String code, String description) {}
 }
