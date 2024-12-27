@@ -1,38 +1,42 @@
 package com.fly_ops.flightmanagement.models;
 
 import com.azure.spring.data.cosmos.core.mapping.Container;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Container(containerName = "airlines")  // The container for this entity
+import java.time.LocalDateTime;
+
+@Container(containerName = "airlines")
 public class Airline {
 
     @Id
-    private String id;  // This will be generated automatically
+    private String id;
+    private String code;
+    private String description;
 
-    private String code;            // Required
-    private String description;     // Optional
-    private LocalDateTime creTime;  // System should fill
-    private LocalDateTime updateTime; // System should fill
-    private String updateUser;      // System should fill
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
+    private LocalDateTime creTime;
+
+    @JsonFormat(shape = JsonFormat.Shape.ARRAY)
+    private LocalDateTime updateTime;
+
+    private String updateUser;
 
     // Default constructor
     public Airline() {
-        this.id = UUID.randomUUID().toString();  // Automatically generate a unique ID
     }
 
-    // Constructor for initialization
+    // Full constructor
     public Airline(String id, String code, String description, LocalDateTime creTime, LocalDateTime updateTime, String updateUser) {
-        this.id = id != null ? id : UUID.randomUUID().toString();  // Generate ID if not passed
+        this.id = id;
         this.code = code;
         this.description = description;
+        this.creTime = creTime;
+        this.updateTime = updateTime;
         this.updateUser = updateUser;
-        this.creTime = creTime != null ? creTime : LocalDateTime.now();  // Default to current time if not passed
-        this.updateTime = updateTime != null ? updateTime : LocalDateTime.now(); // Default to current time if not passed
     }
 
-    // Getters and Setters
+    // Getters and setters
     public String getId() {
         return id;
     }

@@ -45,18 +45,8 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
@@ -67,6 +57,30 @@
 			<groupId>javax.persistence</groupId>
 			<artifactId>javax.persistence-api</artifactId>
 			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.2.0.Final</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.azure.spring/spring-cloud-azure-autoconfigure -->
+		<dependency>
+			<groupId>com.azure.spring</groupId>
+			<artifactId>spring-cloud-azure-autoconfigure</artifactId>
+			<version>5.19.0</version>
+		</dependency>
+
+		<!-- Azure Cosmos DB -->
+		<dependency>
+			<groupId>com.azure</groupId>
+			<artifactId>azure-spring-data-cosmos</artifactId>
+			<version>5.19.0</version>
 		</dependency>
 	</dependencies>
 

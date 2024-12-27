@@ -24,7 +24,7 @@ function AirlinesMenu({ closeMenu }) {
             .then((response) => response.json())
             .then((createdAirline) => {
                 setAirlines([...airlines, createdAirline]);
-                setNewAirline({ code: '', description: '' });
+                setNewAirline({ code: '', description: '' }); // Reset form fields
             })
             .catch((error) => console.error('Error creating airline:', error));
     };
@@ -124,6 +124,7 @@ function AirlinesMenu({ closeMenu }) {
                 <table className="airline-table">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Code</th>
                         <th>Description</th>
                         <th>Created</th>
@@ -135,6 +136,7 @@ function AirlinesMenu({ closeMenu }) {
                     <tbody>
                     {airlines.map((airline) => (
                         <tr key={airline.id}>
+                            <td>{airline.id}</td>
                             <td>{airline.code}</td>
                             <td>{airline.description}</td>
                             <td>{airline.creTime}</td>
