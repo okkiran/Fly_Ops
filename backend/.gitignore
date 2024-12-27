@@ -36,3 +36,6 @@ build/
 .gitattributes
 mvnw
 mvnw.cmd
+
+### COSMOS DB keys ###
+src/main/resources/application.properties

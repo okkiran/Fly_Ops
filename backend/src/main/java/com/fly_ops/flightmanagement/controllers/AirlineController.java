@@ -10,7 +10,7 @@ import reactor.core.publisher.Flux;
 
 @RestController
 @RequestMapping("/api/airlines")
-@CrossOrigin(origins = "http://localhost:5175")  // Adjust URL if needed
+@CrossOrigin(origins = "http://localhost:5173")  // Adjust URL if needed
 public class AirlineController {
 
     private final AirlineService airlineService;
