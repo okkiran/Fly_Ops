@@ -37,11 +37,8 @@ canvas {
   opacity: 0;
 }
 
-.menu {
-  transform: translateX(-50%) scale(1);
-}
-
 .menu.visible {
+  transform: translateX(-50%) scale(1);
   opacity: 1;
 }
 
@@ -95,7 +92,7 @@ canvas {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Floating Menu */
+/* Floating Menu Overlay */
 .floating-menu-overlay {
   position: fixed;
   top: 0;
@@ -115,7 +112,8 @@ canvas {
   color: black;
   padding: 30px;
   border-radius: 10px;
-  width: 1000px; /* Adjusted width for CRUD form */
+  width: 80%; /* Responsive width */
+  max-width: 1000px;
   max-height: 80%;
   overflow-y: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -134,7 +132,7 @@ canvas {
   color: black;
 }
 
-/* Styling for the form */
+/* Styling for the form inside the floating menu */
 form {
   margin-top: 20px;
   display: flex;
@@ -142,21 +140,23 @@ form {
 }
 
 /* Form input fields */
-input {
-  margin-bottom: 10px;
-  padding: 10px;
+input, select {
+  margin-bottom: 15px;
+  padding: 12px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 16px;
 }
 
-/* Buttons */
+/* Buttons in the form */
 button {
   background-color: #007bff;
   color: white;
-  padding: 10px;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 button:hover {
@@ -186,7 +186,7 @@ button:hover {
   opacity: 0.8;
 }
 
-/* Table Styling for Airlines Data */
+/* Table Styling */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -195,7 +195,7 @@ table {
 }
 
 th, td {
-  padding: 10px;
+  padding: 12px;
   text-align: left;
   border: 1px solid #ddd;
 }
@@ -212,99 +212,37 @@ td {
 table {
   margin-top: 20px;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 15px;
-}
-
-/* Floating Menu Overlay (Aircraft) */
-.floating-menu-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 2000;
-}
-
-/* Styling for the floating menu (Aircraft) */
-.floating-menu {
-  background: white;
-  color: black;
-  padding: 30px;
-  border-radius: 10px;
-  width: 1000px; /* Adjusted width for CRUD form */
-  max-height: 80%;
-  overflow-y: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  position: relative;
-}
-
-/* Close button on the floating menu (Aircraft) */
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
+/* Additional Styling for CRUD Table */
+table button {
+  padding: 5px 10px;
+  margin: 5px;
   cursor: pointer;
-  color: black;
-}
-
-/* Styling for the Aircraft form */
-.form-container {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Form input fields (Aircraft) */
-input {
-  margin-bottom: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 5px;
 }
 
-/* Aircraft specific buttons */
-.create-button {
-  background-color: #28a745; /* Green for Create */
+table .edit-button {
+  background-color: #007bff;
+  color: white;
 }
 
-.update-button {
-  background-color: #ffc107; /* Yellow for Update */
+table .delete-button {
+  background-color: #dc3545;
+  color: white;
 }
 
-.edit-button {
-  background-color: #007bff; /* Blue for Edit */
-  margin-left: 10px;
-}
-
-.delete-button {
-  background-color: #dc3545; /* Red for Delete */
-  margin-left: 10px;
-}
-
-button:hover {
+table .edit-button:hover,
+table .delete-button:hover {
   opacity: 0.8;
 }
 
-/* Table Styling for Aircrafts Data */
-table.aircraft-table {
+/* Styling for Station Data Table */
+table.station-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
@@ -312,7 +250,7 @@ table.aircraft-table {
 }
 
 th, td {
-  padding: 10px;
+  padding: 12px;
   text-align: left;
   border: 1px solid #ddd;
 }
@@ -325,11 +263,11 @@ td {
   background-color: #ffffff;
 }
 
-/* Aircraft Table Centering */
-table.aircraft-table {
+/* Centering the station table */
+table.station-table {
   margin-top: 20px;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -342,28 +280,3 @@ ul {
 li {
   margin-bottom: 15px;
 }
-
-/* Additional styling for CRUD Table */
-.aircraft-table button {
-  padding: 5px 10px;
-  margin: 5px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-}
-
-.aircraft-table .edit-button {
-  background-color: #007bff;
-  color: white;
-}
-
-.aircraft-table .delete-button {
-  background-color: #dc3545;
-  color: white;
-}
-
-.aircraft-table .edit-button:hover,
-.aircraft-table .delete-button:hover {
-  opacity: 0.8;
-}
-
