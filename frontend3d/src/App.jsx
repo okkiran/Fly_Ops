@@ -106,14 +106,14 @@ function App() {
             duration: 2,
             ease: "power2.out",
             onUpdate: () => {
-                setAirplanePosition([...airplanePosition]); // Update state
+                setAirplanePosition([...airplanePosition]);
             }
         });
 
         // Fetch airlines when "Airlines" menu is clicked
         if (menuOption === "Airlines") {
-            if (airlines.length === 0) {  // Only fetch data if not already fetched
-                fetch('http://localhost:8080/api/airlines') // Replace with your backend URL
+            if (airlines.length === 0) {
+                fetch('http://localhost:8080/api/airlines')
                     .then(response => response.json())
                     .then(data => setAirlines(data))
                     .catch(error => console.error('Error fetching airlines:', error));
@@ -122,8 +122,8 @@ function App() {
 
         // Fetch aircrafts when "Aircrafts" menu is clicked
         if (menuOption === "Aircrafts") {
-            if (aircrafts.length === 0) {  // Only fetch data if not already fetched
-                fetch('http://localhost:8080/api/aircrafts') // Replace with your backend URL
+            if (aircrafts.length === 0) {
+                fetch('http://localhost:8080/api/aircrafts')
                     .then(response => response.json())
                     .then(data => setAircrafts(data))
                     .catch(error => console.error('Error fetching aircrafts:', error));
@@ -132,8 +132,8 @@ function App() {
 
         // Fetch stations when "Stations" menu is clicked
         if (menuOption === "Stations") {
-            if (stations.length === 0) {  // Only fetch data if not already fetched
-                fetch('http://localhost:8080/api/stations') // Replace with your backend URL
+            if (stations.length === 0) {
+                fetch('http://localhost:8080/api/stations')
                     .then(response => response.json())
                     .then(data => setStations(data))
                     .catch(error => console.error('Error fetching stations:', error));
