@@ -86,7 +86,7 @@ function StationMenu({ closeMenu }) {
     const handleAirportChange = (event) => {
         const airportId = event.target.value;
         setSelectedAirport(airportId);
-        const airport = airportsByCountry[selectedCountry].find(a => a.id == airportId);
+        const airport = airportsByCountry[selectedCountry].find(a => a.id === airportId);
         if (airport) {
             setAirportCode(airport.code);  // Auto-fill the airport code
             setAirportDescription(airport.name);
