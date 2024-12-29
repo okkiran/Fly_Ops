@@ -7,7 +7,7 @@ import Background from "./components/Background";
 import { gsap } from "gsap";
 import Login from './components/Login'; // Import your Login component
 import AirlinesMenu from './components/AirlinesMenu';  // Import AirlinesMenu component
-
+import AircraftMenu from './components/AircraftMenu'; // Import AircraftMenu component
 
 function App() {
     const [scrollProgress, setScrollProgress] = useState(0);
@@ -21,14 +21,16 @@ function App() {
 
     // New state for storing airline data
     const [airlines, setAirlines] = useState([]);
+    const [aircrafts, setAircrafts] = useState([]); // New state for aircrafts
 
-    const menuItems = ['Flights', 'Users', 'Airlines', 'Stations'];
+    const menuItems = ['Flights', 'Users', 'Airlines', 'Stations', 'Aircrafts'];
 
     const menuLocations = {
         Flights: [10, 5, -5],
         Users: [-10, 3, 2],
         Airlines: [0, 8, -10],
-        Stations: [5, -5, 5]
+        Stations: [5, -5, 5],
+        Aircrafts: [0, 0, 10], // Add aircrafts menu location
     };
 
     const handleLogin = (username, password) => {
@@ -115,8 +117,17 @@ function App() {
                     .catch(error => console.error('Error fetching airlines:', error));
             }
         }
-    };
 
+        // Fetch aircrafts when "Aircrafts" menu is clicked
+        if (menuOption === "Aircrafts") {
+            if (aircrafts.length === 0) {  // Only fetch data if not already fetched
+                fetch('http://localhost:8080/api/aircrafts') // Replace with your backend URL
+                    .then(response => response.json())
+                    .then(data => setAircrafts(data))
+                    .catch(error => console.error('Error fetching aircrafts:', error));
+            }
+        }
+    };
 
     const closeFloatingMenu = () => {
         setFloatingMenuVisible(false); // Hide the floating menu
@@ -153,6 +164,7 @@ function App() {
                                 <li onClick={() => openFloatingMenu("Users")}>Users</li>
                                 <li onClick={() => openFloatingMenu("Airlines")}>Airlines</li>
                                 <li onClick={() => openFloatingMenu("Stations")}>Stations</li>
+                                <li onClick={() => openFloatingMenu("Aircrafts")}>Aircrafts</li> {/* New Aircrafts menu */}
                             </ul>
                         )}
                     </div>
@@ -185,7 +197,7 @@ function App() {
                     )}
 
                     {/* Floating Menu Overlay */}
-                    {floatingMenuVisible && menuContent !== "Airlines" && (
+                    {floatingMenuVisible && menuContent !== "Airlines" && menuContent !== "Aircrafts" && (
                         <div className="floating-menu-overlay">
                             <div className="floating-menu">
                                 <button className="close-button" onClick={closeFloatingMenu}>
@@ -203,11 +215,17 @@ function App() {
                             <AirlinesMenu airlines={airlines} closeMenu={closeFloatingMenu} />
                         </div>
                     )}
+
+                    {/* Render Aircraft Menu */}
+                    {floatingMenuVisible && menuContent === "Aircrafts" && (
+                        <div className="floating-menu-overlay">
+                            <AircraftMenu closeMenu={closeFloatingMenu} />
+                        </div>
+                    )}
                 </>
             )}
         </div>
     );
-
 }
 
 export default App;
