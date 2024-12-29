@@ -9,7 +9,7 @@ function StationMenu({ closeMenu }) {
     const [airportDescription, setAirportDescription] = useState('');  // Description
     const [countries, setCountries] = useState([]);
     const [airportsByCountry, setAirportsByCountry] = useState({});
-    const [editingStation, setEditingStation] = useState(null);  // To handle editing
+
 
     // Fetch stations data when the floating menu is opened
     useEffect(() => {
@@ -89,7 +89,7 @@ function StationMenu({ closeMenu }) {
         const airport = airportsByCountry[selectedCountry].find(a => a.id == airportId);
         if (airport) {
             setAirportCode(airport.code);  // Auto-fill the airport code
-            setAirportDescription(airport.name);  // Auto-fill description (you can customize this)
+            setAirportDescription(airport.name);
         }
     };
 
@@ -112,7 +112,7 @@ function StationMenu({ closeMenu }) {
         };
 
         // Save the new station to the Cosmos DB by calling the backend API
-        fetch('http://localhost:8080/api/stations', {  // Replace with your actual backend URL
+        fetch('http://localhost:8080/api/stations', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ function StationMenu({ closeMenu }) {
             .then(savedStation => {
                 // Add the saved station to the state if the backend call is successful
                 setStations([...stations, savedStation]);  // Add to the list of stations
-                clearForm();  // Reset form fields
+                clearForm();
             })
             .catch(error => {
                 console.error('Error saving station:', error);
