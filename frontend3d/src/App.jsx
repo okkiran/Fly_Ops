@@ -176,7 +176,7 @@ function App() {
                                 <li onClick={() => openFloatingMenu("Users")}>Users</li>
                                 <li onClick={() => openFloatingMenu("Airlines")}>Airlines</li>
                                 <li onClick={() => openFloatingMenu("Stations")}>Stations</li>
-                                <li onClick={() => openFloatingMenu("Aircrafts")}>Aircrafts</li>
+                                <li onClick={() => openFloatingMenu("Aircrafts")}>Aircraft</li>
                             </ul>
                         )}
                     </div>
