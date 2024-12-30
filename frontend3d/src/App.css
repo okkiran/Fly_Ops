@@ -280,3 +280,15 @@ ul {
 li {
   margin-bottom: 15px;
 }
+/* Styling for the select dropdown */
+select {
+  margin-bottom: 15px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 100%; /* Ensure it takes the full width of the form */
+  max-height: 200px; /* Set a maximum height for the dropdown */
+  overflow-y: auto; /* Enable vertical scrolling if the list is too long */
+  box-sizing: border-box; /* Include padding in width/height calculation */
+}
