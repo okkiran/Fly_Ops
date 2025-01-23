@@ -6,6 +6,8 @@ Built using Java Spring Boot for the backend and React Three Fiber for the 3D co
 
 Azure Cosmos DB for database operations. 
 
+The airplane model triggers the respective menu item with scroll-wheel movement for interactivity.
+
 Integrates aviation data from [OpenFlights](https://openflights.org/data.php).
 
 
