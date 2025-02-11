@@ -4,11 +4,13 @@ Fly_Ops is a web application for managing data related to airlines, aircraft, an
 
 Built using Java Spring Boot for the backend and React Three Fiber for the 3D component frontend.
 
+Integrates aviation data from [OpenFlights](https://openflights.org/data.php).
+
 Azure Cosmos DB for database operations. 
 
-The airplane model triggers the respective menu item with scroll-wheel movement for interactivity.
+The airplane model triggers the respective menu item with scroll-wheel movement for interactivity. 
 
-Integrates aviation data from [OpenFlights](https://openflights.org/data.php).
+For the React Three Fiber implementations, I influenced by the content of [/@WawaSensei](https://www.youtube.com/@WawaSensei). Specifically by [this](https://www.youtube.com/watch?v=8r8rzp8t2aM) one.
 
 <img width="496" alt="image" src="https://github.com/user-attachments/assets/9471cbc4-01f8-4c65-84aa-f8987120f587" />
 
